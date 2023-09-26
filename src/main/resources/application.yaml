@@ -1,0 +1,12 @@
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          some-provider:
+            issuer-uri: http://localhost:8484/auth/realms/spring
+        registration:
+          some-provider:
+            client-id: spring-client
+
+# Create realm "spring" in keycloak with "spring-client" client.
