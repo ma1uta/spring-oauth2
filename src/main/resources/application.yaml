@@ -1,13 +1,8 @@
 spring:
   security:
     oauth2:
-      client:
-        provider:
-          some-provider:
-            issuer-uri: http://localhost:8484/realms/demo
-        registration:
-          some-provider:
-            client-id: demo-client
-            client-secret: dZxki72ua3dlUNdIMbhUyaRTVKpKOxHG
-            scope: openid
-# Create realm "spring" in keycloak with "spring-client" client.
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/demo
+server:
+  port: 8000

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/**")
-@PreAuthorize("isAuthenticated()")
 public class SimpleController {
 
+    @PreAuthorize("hasAnyRole('GROUP1')")
     @GetMapping
     public String index() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
