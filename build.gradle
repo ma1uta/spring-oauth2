@@ -1,8 +1,16 @@
+buildscript {
+	dependencies {
+		classpath('com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0')
+	}
+}
+
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.0'
-	id 'io.spring.dependency-management' version '1.1.5'
-	id 'com.google.cloud.tools.jib' version '3.4.2'
+	id 'org.springframework.boot' version '3.3.3'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.google.cloud.tools.jib' version '3.4.3'
+	id 'org.graalvm.buildtools.native' version '0.10.2'
+	id "com.github.ben-manes.versions" version "0.51.0"
 }
 
 group = 'com.example'
@@ -20,10 +28,36 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+graalvmNative {
+	toolchainDetection = true
+}
+
+jib {
+	from {
+		image = "docker.io/bellsoft/liberica-openjdk-alpine:21.0.3"
+	}
+
+	pluginExtensions {
+		pluginExtension {
+			implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
+			properties = ["imageName": "app"]
+		}
+	}
+}
+
+bootBuildImage {
+	builder = "docker.io/paketobuildpacks/builder-jammy-tiny"
+	environment = [
+			"BP_NATIVE_IMAGE" : "true"
+	]
+	imageName = "repo.sablin.xyz/demo/app:${project.version}"
 }
