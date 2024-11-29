@@ -6,3 +6,8 @@ spring:
           issuer-uri: http://localhost:8080/realms/demo
 server:
   port: 8000
+
+print:
+  service:
+    - com.example.demo.service.InMemoryPrintService
+    - com.example.demo.service.AnotherPrintService

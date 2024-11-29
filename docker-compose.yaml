@@ -13,19 +13,19 @@ services:
       - ./pgdata:/var/lib/postgresql/data
 
   keycloak:
-    image: keycloak/keycloak:25.0.4
+    image: keycloak/keycloak:26.0.6
     container_name: keycloak
     command:
       - start-dev
     environment:
       KC_HOSTNAME: "http://localhost:8080"
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
-      DB_DATABASE: keycloak_db
-      DB_USER: ${POSTGRES_USER:-keycloak}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-keycloak}
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak_db
+      KC_DB_USERNAME: ${POSTGRES_USER:-keycloak}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-keycloak}
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
     ports:
       - "8080:8080"
     depends_on:
