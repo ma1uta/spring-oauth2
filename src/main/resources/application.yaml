@@ -4,6 +4,15 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/demo
+      client:
+        provider:
+          dev:
+            issuer-uri: http://localhost:8080/realms/demo
+        registration:
+          client-one:
+            provider: dev
+            client-id: client-1
+            client-secret: secret
 server:
   port: 8000
 
